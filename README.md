@@ -2,7 +2,9 @@
 
 A Pac-Man-inspired arcade game built with JavaFX, with a codebase structured to showcase classic OO design patterns.
 
-![Demo](docs/assets/demo.gif)
+<p align="center">
+  <img src="docs/assets/demo.gif" alt="Demo" />
+</p>
 
 
 ## What it is
