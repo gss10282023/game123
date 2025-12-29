@@ -9,6 +9,7 @@ import pacman.model.state.GhostState;
 import pacman.model.state.NormalState;
 import pacman.model.maze.Maze;
 import pacman.model.strategy.GhostChaseStrategy;
+import pacman.util.ResourceUtils;
 
 import java.util.*;
 
@@ -23,7 +24,7 @@ public class GhostImpl implements Ghost {
 
 
     //Set up different images for different types of ghosts
-    private final Image frightenedImage = new Image("maze/ghosts/frightened.png");
+    private final Image frightenedImage = new Image(ResourceUtils.toExternalForm("maze/ghosts/frightened.png"));
     private Image currentImage;
 
 

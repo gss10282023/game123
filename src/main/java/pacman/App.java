@@ -1,6 +1,7 @@
 package pacman;
 
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.stage.Stage;
 import pacman.model.engine.GameEngine;
 import pacman.model.engine.GameEngineImpl;
@@ -14,10 +15,18 @@ public class App extends Application {
 
     @Override
     public void start(Stage primaryStage) {
-        GameEngine model = new GameEngineImpl("src/main/resources/config.json");
+        String configPath = getParameters().getNamed().getOrDefault("config", "/config.json");
+        GameEngine model;
+        try {
+            model = new GameEngineImpl(configPath);
+        } catch (ConfigurationParseException e) {
+            System.err.println(e.getMessage());
+            Platform.exit();
+            return;
+        }
         GameWindow window = new GameWindow(model, 448, 576);
 
-        primaryStage.setTitle("Pac-Man");
+        primaryStage.setTitle("PacmanFX");
         primaryStage.setScene(window.getScene());
         primaryStage.show();
 

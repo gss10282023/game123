@@ -8,4 +8,8 @@ public class ConfigurationParseException extends RuntimeException {
     public ConfigurationParseException(String error) {
         super(error);
     }
+
+    public ConfigurationParseException(String error, Throwable cause) {
+        super(error, cause);
+    }
 }

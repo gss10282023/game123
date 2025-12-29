@@ -5,10 +5,9 @@ import javafx.scene.text.Font;
 import pacman.model.engine.observer.GameState;
 import pacman.model.engine.observer.GameStateObserver;
 import pacman.model.level.observer.LevelStateObserver;
-import pacman.view.GameWindow;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,22 +16,33 @@ import java.util.List;
  */
 public class DisplayManager implements LevelStateObserver, GameStateObserver {
 
+    private static final String FONT_RESOURCE_PATH = "/maze/PressStart2P-Regular.ttf";
+
     private final ScoreDisplay scoreDisplay;
     private final GameStateDisplay gameStatusDisplay;
     private final NumLivesDisplay numLivesDisplay;
 
     public DisplayManager() {
-
-        Font font;
-        try {
-            font = Font.loadFont(new FileInputStream(GameWindow.FONT_FILE), 16);
-        } catch (FileNotFoundException e) {
-            font = new Font(16);
-        }
+        Font font = loadUiFontOrFallback(16);
 
         this.scoreDisplay = new ScoreDisplay(font);
         this.gameStatusDisplay = new GameStateDisplay(font);
         this.numLivesDisplay = new NumLivesDisplay();
+    }
+
+    private static Font loadUiFontOrFallback(double size) {
+        try (InputStream inputStream = DisplayManager.class.getResourceAsStream(FONT_RESOURCE_PATH)) {
+            if (inputStream != null) {
+                Font loaded = Font.loadFont(inputStream, size);
+                if (loaded != null) {
+                    return loaded;
+                }
+            }
+        } catch (IOException ignored) {
+            // Fall back to system font.
+        }
+
+        return new Font(size);
     }
 
     public List<Node> getNodes() {

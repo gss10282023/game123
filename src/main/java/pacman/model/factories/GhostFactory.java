@@ -2,6 +2,7 @@ package pacman.model.factories;
 
 import javafx.scene.image.Image;
 import pacman.ConfigurationParseException;
+import pacman.util.ResourceUtils;
 import pacman.model.entity.Renderable;
 import pacman.model.entity.dynamic.ghost.GhostImpl;
 import pacman.model.entity.dynamic.ghost.GhostMode;
@@ -20,10 +21,10 @@ public class GhostFactory implements RenderableFactory {
     private static final int TOP_Y_POSITION_OF_MAP = 16 * 3;
     private static final int BOTTOM_Y_POSITION_OF_MAP = 16 * 34;
 
-    private static final Image BLINKY_IMAGE = new Image("maze/ghosts/blinky.png");
-    private static final Image INKY_IMAGE = new Image("maze/ghosts/inky.png");
-    private static final Image CLYDE_IMAGE = new Image("maze/ghosts/clyde.png");
-    private static final Image PINKY_IMAGE = new Image("maze/ghosts/pinky.png");
+    private static final Image BLINKY_IMAGE = new Image(ResourceUtils.toExternalForm("maze/ghosts/blinky.png"));
+    private static final Image INKY_IMAGE = new Image(ResourceUtils.toExternalForm("maze/ghosts/inky.png"));
+    private static final Image CLYDE_IMAGE = new Image(ResourceUtils.toExternalForm("maze/ghosts/clyde.png"));
+    private static final Image PINKY_IMAGE = new Image(ResourceUtils.toExternalForm("maze/ghosts/pinky.png"));
     private static final Image GHOST_IMAGE = BLINKY_IMAGE;
     List<Vector2D> targetCorners = Arrays.asList(
             new Vector2D(0, TOP_Y_POSITION_OF_MAP),
@@ -188,6 +189,5 @@ public class GhostFactory implements RenderableFactory {
 
 
 }
-
 
 

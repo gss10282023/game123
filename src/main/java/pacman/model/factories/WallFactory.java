@@ -2,6 +2,7 @@ package pacman.model.factories;
 
 import javafx.scene.image.Image;
 import pacman.ConfigurationParseException;
+import pacman.util.ResourceUtils;
 import pacman.model.entity.Renderable;
 import pacman.model.entity.dynamic.physics.BoundingBox;
 import pacman.model.entity.dynamic.physics.BoundingBoxImpl;
@@ -19,12 +20,12 @@ public class WallFactory implements RenderableFactory {
     private static final Map<Character, Image> IMAGES = new HashMap<>();
 
     static {
-        IMAGES.put(RenderableType.HORIZONTAL_WALL, new Image("maze/walls/horizontal.png"));
-        IMAGES.put(RenderableType.VERTICAL_WALL, new Image("maze/walls/vertical.png"));
-        IMAGES.put(RenderableType.UP_LEFT_WALL, new Image("maze/walls/upLeft.png"));
-        IMAGES.put(RenderableType.UP_RIGHT_WALL, new Image("maze/walls/upRight.png"));
-        IMAGES.put(RenderableType.DOWN_LEFT_WALL, new Image("maze/walls/downLeft.png"));
-        IMAGES.put(RenderableType.DOWN_RIGHT_WALL, new Image("maze/walls/downRight.png"));
+        IMAGES.put(RenderableType.HORIZONTAL_WALL, new Image(ResourceUtils.toExternalForm("maze/walls/horizontal.png")));
+        IMAGES.put(RenderableType.VERTICAL_WALL, new Image(ResourceUtils.toExternalForm("maze/walls/vertical.png")));
+        IMAGES.put(RenderableType.UP_LEFT_WALL, new Image(ResourceUtils.toExternalForm("maze/walls/upLeft.png")));
+        IMAGES.put(RenderableType.UP_RIGHT_WALL, new Image(ResourceUtils.toExternalForm("maze/walls/upRight.png")));
+        IMAGES.put(RenderableType.DOWN_LEFT_WALL, new Image(ResourceUtils.toExternalForm("maze/walls/downLeft.png")));
+        IMAGES.put(RenderableType.DOWN_RIGHT_WALL, new Image(ResourceUtils.toExternalForm("maze/walls/downRight.png")));
     }
 
     private final Renderable.Layer layer = Renderable.Layer.BACKGROUND;

@@ -2,6 +2,7 @@ package pacman.model.factories;
 
 import javafx.scene.image.Image;
 import pacman.ConfigurationParseException;
+import pacman.util.ResourceUtils;
 import pacman.model.entity.Renderable;
 import pacman.model.entity.dynamic.physics.*;
 import pacman.model.entity.dynamic.player.Pacman;
@@ -14,11 +15,11 @@ import java.util.Map;
  * Concrete renderable factory for Pac-Man objects
  */
 public class PacmanFactory implements RenderableFactory {
-    private static final Image playerLeftImage = new Image("maze/pacman/playerLeft.png");
-    private static final Image playerRightImage = new Image("maze/pacman/playerRight.png");
-    private static final Image playerUpImage = new Image("maze/pacman/playerUp.png");
-    private static final Image playerDownImage = new Image("maze/pacman/playerDown.png");
-    private static final Image playerClosedImage = new Image("maze/pacman/playerClosed.png");
+    private static final Image playerLeftImage = new Image(ResourceUtils.toExternalForm("maze/pacman/playerLeft.png"));
+    private static final Image playerRightImage = new Image(ResourceUtils.toExternalForm("maze/pacman/playerRight.png"));
+    private static final Image playerUpImage = new Image(ResourceUtils.toExternalForm("maze/pacman/playerUp.png"));
+    private static final Image playerDownImage = new Image(ResourceUtils.toExternalForm("maze/pacman/playerDown.png"));
+    private static final Image playerClosedImage = new Image(ResourceUtils.toExternalForm("maze/pacman/playerClosed.png"));
 
     @Override
     public Renderable createRenderable(

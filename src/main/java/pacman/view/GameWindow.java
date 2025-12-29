@@ -14,7 +14,6 @@ import pacman.view.entity.EntityView;
 import pacman.view.entity.EntityViewImpl;
 import pacman.view.keyboard.KeyboardInputHandler;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,8 +21,6 @@ import java.util.List;
  * Responsible for managing the Pac-Man Game View
  */
 public class GameWindow {
-
-    public static final File FONT_FILE = new File("src/main/resources/maze/PressStart2P-Regular.ttf");
 
     private final Scene scene;
     private final Pane pane;

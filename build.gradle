@@ -4,8 +4,9 @@ plugins {
     id 'org.openjfx.javafxplugin' version '0.0.13'
 }
 
-group 'org.example'
-version '1.0-SNAPSHOT'
+group 'io.github.gss10282023'
+version '0.1.0'
+description = 'Pac-Man-inspired arcade game built with JavaFX'
 
 repositories {
     mavenCentral()

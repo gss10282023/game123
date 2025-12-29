@@ -1,5 +1,5 @@
 {
-  "map": "src/main/resources/new-map.txt",
+  "map": "new-map.txt",
   "numLives": 3,
   "levels": [
     {

@@ -13,6 +13,7 @@ import pacman.model.level.observer.LevelStateObserver;
 import pacman.model.maze.Maze;
 import pacman.model.maze.MazeCreator;
 import pacman.view.keyboard.command.*;
+import pacman.ConfigurationParseException;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -81,7 +82,7 @@ public class GameEngineImpl implements GameEngine {
         this.levelConfigs = gameConfigurationReader.getLevelConfigs();
         this.numLevels = levelConfigs.size();
         if (levelConfigs.isEmpty()) {
-            System.exit(0);
+            throw new ConfigurationParseException("Config must define at least one level.");
         }
     }
 
@@ -192,4 +193,3 @@ public class GameEngineImpl implements GameEngine {
         this.levelStateObservers.add(observer);
     }
 }
-

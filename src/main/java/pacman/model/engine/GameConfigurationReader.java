@@ -4,33 +4,71 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
+import pacman.ConfigurationParseException;
 
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 /**
  * Helper class to read Game Configuration from JSONObject
  */
 public class GameConfigurationReader {
 
-    private JSONObject gameConfig;
+    private final JSONObject gameConfig;
 
     public GameConfigurationReader(String configPath) {
+        if (configPath == null || configPath.isBlank()) {
+            throw new ConfigurationParseException("Config path is empty.");
+        }
+
+        JSONObject parsed;
+        Path filePath = Paths.get(configPath);
+        if (Files.exists(filePath)) {
+            try (Reader reader = Files.newBufferedReader(filePath, StandardCharsets.UTF_8)) {
+                parsed = parseConfig(reader, filePath.toString());
+            } catch (IOException e) {
+                throw new ConfigurationParseException("Failed to read config file: " + filePath, e);
+            }
+        } else {
+            String resourcePath = normalizeClasspathPath(configPath);
+            InputStream inputStream = GameConfigurationReader.class.getResourceAsStream(resourcePath);
+            if (inputStream == null) {
+                throw new ConfigurationParseException("Config not found on filesystem or classpath: " + configPath);
+            }
+            try (Reader reader = new InputStreamReader(inputStream, StandardCharsets.UTF_8)) {
+                parsed = parseConfig(reader, resourcePath);
+            } catch (IOException e) {
+                throw new ConfigurationParseException("Failed to read config resource: " + resourcePath, e);
+            }
+        }
+
+        this.gameConfig = parsed;
+    }
+
+    private static JSONObject parseConfig(Reader reader, String sourceDescription) {
         JSONParser parser = new JSONParser();
 
         try {
-            this.gameConfig = (JSONObject) parser.parse(new FileReader(configPath));
-        } catch (FileNotFoundException e) {
-            System.out.println("Config file not found");
-            System.exit(0);
+            Object parsed = parser.parse(reader);
+            if (!(parsed instanceof JSONObject object)) {
+                throw new ConfigurationParseException("Config root must be a JSON object: " + sourceDescription);
+            }
+            return object;
         } catch (IOException e) {
-            System.out.println("Error reading config file");
-            System.exit(0);
+            throw new ConfigurationParseException("Failed to read config: " + sourceDescription, e);
         } catch (ParseException e) {
-            System.out.println("Error parsing config file");
-            System.exit(0);
+            throw new ConfigurationParseException("Failed to parse config: " + sourceDescription, e);
         }
+    }
+
+    private static String normalizeClasspathPath(String path) {
+        if (path.startsWith("/")) {
+            return path;
+        }
+        return "/" + path;
     }
 
     /**

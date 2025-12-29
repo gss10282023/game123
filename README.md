@@ -1,77 +1,94 @@
-# How to Run the Code
+# PacmanFX
 
-This project uses Gradle as the build system. Follow the steps below to compile and run the code.
+A Pac-Man-inspired arcade game built with JavaFX, with a codebase structured to showcase classic OO design patterns.
 
-## Prerequisites
+![Demo](docs/assets/demo.gif)
 
-- Ensure you have [Gradle](https://gradle.org/install/) installed on your system.
-- Navigate to the root directory of the project using your terminal.
 
-## Building the Project
+## What it is
 
-To compile the project, use the following command:
+- Playable JavaFX Pacman clone (keyboard-controlled)
+- Data-driven gameplay via `src/main/resources/config.json` and map files under `src/main/resources/`
+- A compact reference implementation of Strategy/State/Decorator patterns in a real gameplay loop
+
+## Who it's for
+
+- Want to play quickly: follow the “Quick start” section
+- Want to learn: jump to “Architecture & patterns”
+- Want to extend it: tweak `config.json`, swap maps, or add new ghost behaviors
+
+## Demo
+
+If your Markdown viewer does not render GIFs, use the PNG strip above or see `docs/assets/screenshot-1.png`.
+
+## Quick start
+
+### Prerequisites
+
+- JDK 17+
+
+### Run
+
 ```bash
-gradle clean
+./gradlew run
 ```
-Secondly,
+
+### Build
+
 ```bash
-gradle build
+./gradlew build
 ```
-Thirdly,
+
+### Create a distributable
+
 ```bash
-gradle run
+./gradlew installDist
 ```
 
-# Design Patterns Implemented
+### Use a custom config
 
-## Strategy Pattern
+```bash
+./gradlew run --args="--config=/path/to/config.json"
+```
 
-The Strategy Pattern is implemented in this project to define a family of algorithms, encapsulate each one, and make them interchangeable. This pattern involves the following participants:
+## Controls
 
-1. **Strategy**:
-    - `GhostChaseStrategy.class`
-2. **ConcreteStrategy**:
-    - `BlinkyChaseStrategy.class`
-    - `PinkyChaseStrategy.class`
-    - `InkyChaseStrategy.class`
-    - `ClydeChaseStrategy.class`
-3. **Context**:
-    - `GhostImpl.class`
+- Arrow keys: move
 
-These classes work together to allow each ghost character to use a unique chase strategy, enabling dynamic changes in behavior based on the context in the game.
+## Architecture & patterns
 
+This project is intentionally organized around a few core patterns to keep game logic extensible:
 
+### Strategy (ghost AI)
 
-## State Pattern
+- Strategy: `pacman.model.strategy.GhostChaseStrategy`
+- Implementations: `BlinkyChaseStrategy`, `PinkyChaseStrategy`, `InkyChaseStrategy`, `ClydeChaseStrategy`
+- Context: `pacman.model.entity.dynamic.ghost.GhostImpl`
 
-The State Pattern is used to allow an object to alter its behavior when its internal state changes, making it appear as if the object changes its class. This pattern involves the following participants:
+### State (ghost modes)
 
-1. **State**:
-    - `GhostState.class`
-2. **ConcreteState**:
-    - `NormalState.class`
-    - `FrightenedState.class`
-3. **Context**:
-    - `GhostImpl.class`
+- State: `pacman.model.state.GhostState`
+- Implementations: `NormalState`, `FrightenedState`
+- Context: `pacman.model.entity.dynamic.ghost.GhostImpl`
 
-With this pattern, each ghost can switch between different states, such as "Normal" or "Frightened," which changes their behavior dynamically in response to game events.
+### Decorator (dynamic behavior)
 
+- Component: `pacman.model.decorator.Component`
+- Base implementation: `pacman.model.entity.dynamic.ghost.GhostImpl`
+- Decorators: `pacman.model.decorator.GhostDecorator`, `FrightenedGhostDecorator`
 
+## License
 
+MIT (see `LICENSE`).
 
-## Decorator Pattern
+## Third-party notices
 
-The Decorator Pattern is used to add additional responsibilities to an object dynamically. This pattern involves the following participants:
+See `THIRD_PARTY_NOTICES.md`.
 
-1. **Component**:
-    - `Component` interface
-2. **ConcreteComponent**:
-    - `GhostImpl.class` (implements `Component`)
-3. **Decorator**:
-    - `GhostDecorator.class` abstract class
-4. **ConcreteDecorator**:
-    - `FrightenedGhostDecorator.class`
+## Trademark
 
-These classes work together to allow ghosts to be decorated with additional behaviors, such as becoming "Frightened," without altering the core `GhostImpl` class directly.
+See `TRADEMARKS.md`.
 
+## Contributing
 
+See `CONTRIBUTING.md`.
